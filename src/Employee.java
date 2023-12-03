@@ -98,7 +98,8 @@ public abstract class Employee {
     }
     public String toString(){
         StringBuilder totalBuilder = new StringBuilder();
-        totalBuilder.append( "Name: " ).append(this.getName()).append( " is a" ).append(this.getClass().getName()).append("\n");
+        totalBuilder.append( "Name: " ).append(this.getName()).append( " is a " ).append(this.getClass().getName()).append("\n");
+
         Vehicle vehicle = this.getVehicle();
 
         if (vehicle != null) {
@@ -206,7 +207,9 @@ class Manager extends Employee
     // Method to provide information about the Manager's contract
     @Override
     public String contractInfo() {
-        return this.getName() + " is a Manager " + getContract().getContractInfo();
+        return this.getName() + " is a Manager hello " + getContract().getContractInfo() + "\n"
+                ;
+
     }
 
     // Method to generate a string representation of the Manager

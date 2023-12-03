@@ -46,56 +46,64 @@ public class Vehicle {
         this.category = category;
     }
 
-    @Override
+
     public String toString() {
-        return "Vehicle Details:\n" +
+        return "Employee has a " + getClass() + "\n" +
                 "Make: " + make + "\n" +
                 "Plate: " + plate + "\n" +
                 "Color: " + color + "\n" +
                 "Category: " + category + "\n";
+
     }
 
     public void displayInfo() {
     }
+
+
 }
 
 class Car extends Vehicle {
-    private String carGear;
-    private String carType;
 
-    public Car(String make, String plate, String color, String carGear, String carType) {
-        super(make, plate, color, "car");
-        this.carGear = carGear;
-        this.carType = carType;
+    // Fields representing the characteristics of a Car
+    private Gear gear;
+    private CarType type;
+
+    // Constructor to initialize the Car object with specific attributes
+    public Car(String make, String plate, String color, VehicleType category, Gear gear, CarType type) {
+        // Call the constructor of the superclass (Vehicle) to set common attributes
+        super(make, plate, color, String.valueOf(category));
+        // Set specific attributes of the Car
+        this.gear = gear;
+        this.type = type;
     }
 
-    public Car(String mazda, String customPlate, String white, VehicleType vehicleType, Gear gear, CarType carType) {
-        super(mazda, customPlate, white, vehicleType, gear, carType);
+    // Getter and setter methods
+    public Gear getGear() {
+        return gear;
     }
 
-    public String getCarGear() {
-        return carGear;
+    public void setGear(Gear gear) {
+        this.gear = gear;
     }
 
-    public void setCarGear(String carGear) {
-        this.carGear = carGear;
+
+    public CarType getType() {
+        return type;
     }
 
-    public String getCarType() {
-        return carType;
+    public void setType(CarType type) {
+        this.type = type;
     }
 
-    public void setCarType(String carType) {
-        this.carType = carType;
-    }
-
+    // Override the toString method to provide a custom string representation of the Car
     @Override
     public String toString() {
-        StringBuilder carDetails = new StringBuilder(super.toString());
-        carDetails.append("Car Details:\n");
-        carDetails.append("Car Gear: ").append(carGear).append("\n");
-        carDetails.append("Car Type: ").append(carType).append("\n");
-        return carDetails.toString();
+        // Call the toString method of the superclass (Vehicle) to include common attributes
+        String total = super.toString();
+        // Add Car-specific information to the string representation
+        total = total + "   -Gear: " + this.getGear() + "\n";
+        total = total + "   -Type: " + this.getType() + "\n";
+        return total;
     }
 }
 

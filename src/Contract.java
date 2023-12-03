@@ -1,11 +1,11 @@
 public abstract class Contract {
     protected int daysWorked;
+    private double Bonus;
 
-    public Contract(int daysWorked) {
-        this.daysWorked = daysWorked;
+    public Contract(double bonus, int childAllowance) {
     }
 
-    public Contract(int daysWorked, boolean b, int numberOfChildren, int i, int childAllowance) {
+    public Contract( int numberOfChildren,  boolean b, int i, double Bonus,  int childAllowance) {
     }
 
 
@@ -22,59 +22,70 @@ public abstract class Contract {
     public double calculateAccumulatedSalary(int daysOrHoursWorked) {
         return 0;
     }
+
+    public double Bonus() {
+        return Bonus;
+    }
+    private String isMarried(boolean isMarried) {
+        return isMarried ? "Married" : "Not Married";
+    }
+
+    public void setMoneyPremium(double Bonus) {
+        this.Bonus = Bonus;
+    }
 }
 
 class Permanent extends Contract {
     private double fixedMonthlySalary;
     private int numberOfChildren;
     private boolean isMarried;
+
     private double childAllowance;
 
     private static final double BONUS_PER_CHILD = 200.0;
     private static final double MARRIAGE_BONUS = 500.0;
 
-    public Permanent(int daysWorked, double fixedMonthlySalary, int numberOfChildren, boolean isMarried, double childAllowance) {
-        super(daysWorked); // This should be the first statement in the constructor
+    public Permanent(int numberOfChildren,boolean isMarried,int fixedMonthlySalary,int Bonus, int daysWorked) {
+        super(numberOfChildren, isMarried, fixedMonthlySalary, Bonus, daysWorked); // This should be the first statement in the constructor
         this.fixedMonthlySalary = fixedMonthlySalary;
         this.numberOfChildren = numberOfChildren;
         this.isMarried = isMarried;
-        this.childAllowance = childAllowance;
+        this.daysWorked = daysWorked;
     }
 
-    public Permanent(int daysWorked, boolean b, int numberOfChildren, int i, int childAllowance) {
-        super(daysWorked, b, numberOfChildren, i, childAllowance);
+    public Permanent(int numberOfChildren,boolean b,  int fixedMonthlySalary, double Bonus, int daysWorked) {
+        super( numberOfChildren,b,  fixedMonthlySalary, Bonus,  daysWorked);
     }
-
-
-
 
 
     public double calculateAccumulatedSalary ( double fixedMonthlySalary, int numberOfChildren, boolean isMarried,
-        double childAllowance){
+                                               double childAllowance){
         // Add any additional bonus calculations based on specific requirements
-            return daysWorked * (fixedMonthlySalary + calculateChildBonus() + calculateMarriageBonus()) / 20;
-        }
+        return daysWorked * (fixedMonthlySalary + calculateChildBonus() + calculateMarriageBonus()) / 20;
+    }
 
-        public String getContractInfo () {
-            return "Permanent Contract: Fixed Monthly Salary - $" + fixedMonthlySalary +
-                    ", Number of Children - " + numberOfChildren +
-                    ", Married - " + isMarried +
-                    ", Child Allowance - $" + childAllowance;
-        }
 
-        private double calculateChildBonus () {
-            return numberOfChildren * BONUS_PER_CHILD;
-        }
 
-        private double calculateMarriageBonus () {
-            return isMarried ? MARRIAGE_BONUS : 0;
-        }
+    public String getContractInfo() {
+        return "He/She is " + (isMarried ? "married" : "not married") +" and he/she has " + numberOfChildren+" children.\n" +
+                "He/She has worked for " + daysWorked + " days and upon contract his/her monthly\nsalary is " +
+                fixedMonthlySalary +"\n";
+
+
+    }
+
+    private double calculateChildBonus () {
+        return numberOfChildren * BONUS_PER_CHILD;
+    }
+
+    private double calculateMarriageBonus () {
+        return isMarried ? MARRIAGE_BONUS : 0;
+    }
     @Override
     public double calculateAccumulatedSalary() {
         // Implement the calculation logic for accumulated salary in PermanentContract
-        double baseSalary = daysWorked * (fixedMonthlySalary + calculateChildBonus() + calculateMarriageBonus()) / 20;
         // Add any additional bonus calculations based on specific requirements
-        return baseSalary;
+        return daysWorked * (fixedMonthlySalary + calculateChildBonus() + calculateMarriageBonus()) / 20;
     }
     @Override
     public String convertToContract() {
@@ -82,16 +93,16 @@ class Permanent extends Contract {
         return "Permanent Contract Details...";
     }
 
-
-
 }
 
 class Temporary extends Contract {
-    private double hourlySalary;
+    private final double hourlySalary;
 
-    public Temporary(int daysWorked, double hourlySalary) {
-        super(daysWorked);
+    public Temporary( double hourlySalary,int daysWorked) {
+        super(hourlySalary,daysWorked);
+
         this.hourlySalary = hourlySalary;
+        this.daysWorked = daysWorked;
     }
 
     @Override
@@ -102,8 +113,8 @@ class Temporary extends Contract {
 
     @Override
     public String getContractInfo() {
-        return "Temporary Contract: Hourly Salary - $" + hourlySalary +
-                ", Hours Worked - " + (daysWorked * 8);
+        return "he is a Temporary employee with  " + hourlySalary + "\n" +
+                "hourly salary and he has worked for " + daysWorked  + " hours\n";
     }
 
     @Override
